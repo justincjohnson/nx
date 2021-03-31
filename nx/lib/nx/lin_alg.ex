@@ -865,4 +865,40 @@ defmodule Nx.LinAlg do
       opts
     )
   end
+
+  @doc """
+  Computes the eigen decomposition of the tensor.
+  ...
+
+  ### Examples
+
+      # iex> Nx.LinAlg.eigh(Nx.tensor([[5, 1], [3, 3]]))
+      # #Nx.Tensor<
+      #   s64[2]
+      #   [
+      #     6,
+      #     6
+      #   ]
+      # >
+
+  ### Error cases
+
+      iex> 
+  """
+  def eigh(tensor) do
+    # Should lower be an opts?
+    %T{type: type, shape: shape, names: names} = tensor = Nx.to_tensor(tensor)
+
+    output_type = Nx.Type.to_floating(type)
+    names = [nil, nil]
+    # TODO: Or should we use e and v to match tensor flow instead of xla?
+    {v_shape, w_shape, names} = Nx.Shape.eigh(shape, names)
+
+
+    impl!(tensor).eigh(
+      {
+        %{tensor | names: names, shape: v_shape},
+        %{tensor | names: names, shape: w_shape}
+      }, tensor)
+  end
 end

@@ -1176,6 +1176,11 @@ defmodule Nx.BinaryBackend do
   end
 
   @impl true
+  def eigh(%{type: _output_type, shape: {_rows, _cols}} = _out, _tensor) do
+    raise ArgumentError, "eigh is not yet implemented"
+  end
+
+  @impl true
   def qr(
         {%{shape: {m, k}, type: output_type} = q_holder,
          %{shape: {k, n}, type: output_type} = r_holder},

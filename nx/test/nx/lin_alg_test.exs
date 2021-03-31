@@ -188,6 +188,14 @@ defmodule Nx.LinAlgTest do
     end
   end
 
+  # describe "eigh" do
+  #   test "correctly finds the eigen values" do
+  #     t = Nx.tensor([[5, 1], [3, 3]])
+  #     assert {%{type: _output_type} = v} = Nx.LinAlg.eigh(t)
+  #     assert v == Nx.tensor([6, 6])
+  #   end
+  # end
+
   defp round(tensor, places) do
     Nx.map(tensor, fn x ->
       Float.round(Nx.to_scalar(x), places)

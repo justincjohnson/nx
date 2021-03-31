@@ -689,6 +689,13 @@ defmodule Nx.Defn.Expr do
   end
 
   @impl true
+  def eigh({v, w}, tensor) do
+    tensor = to_expr(tensor)
+    context = tensor.data.context
+    composite({v, w}, &expr(&1, context, :eigh, [{v, w}, tensor]))
+  end
+
+  @impl true
   def triangular_solve(out, a, b, opts) do
     {[a, b], context} = to_exprs([a, b])
     expr(out, context, :triangular_solve, [a, b, opts])

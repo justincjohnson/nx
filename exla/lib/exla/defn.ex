@@ -758,6 +758,13 @@ defmodule EXLA.Defn do
     EXLA.Op.select(EXLA.Op.less_equal(iota_one, iota_zero), cholesky, zeros)
   end
 
+  defp to_operator(:eigh, [{%{type: type}, %{type: type}}, tensor], _ans, state) do
+    # TODO: get lower from opts?
+    lower = false
+    {v, w} = EXLA.Op.eigh(to_type(tensor, type), lower)
+    EXLA.Op.tuple(state.builder, [v, w])
+  end
+
   defp to_operator(:sort, [tensor, opts], ans, state) do
     dimension = opts[:axis]
 

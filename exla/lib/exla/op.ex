@@ -433,6 +433,7 @@ defmodule EXLA.Op do
   end
 
   def eigh(%Op{builder: builder, ref: operand}, lower) do
+    lower = boolean_to_int(lower)
     {v_ref, w_ref} = EXLA.NIF.eigh(operand, lower) |> unwrap!()
 
     {

@@ -90,6 +90,7 @@ defmodule Nx.Backend do
   @callback scatter_window_min(out :: tensor, tensor, tensor, shape, keyword, tensor) :: tensor
 
   @callback cholesky(out :: tensor, tensor) :: tensor
+  @callback eigh(out :: tensor, tensor) :: tensor
   @callback lu({p :: tensor, l :: tensor, u :: tensor}, tensor, keyword) :: tensor
   @callback qr({q :: tensor, r :: tensor}, tensor, keyword) :: tensor
   @callback triangular_solve(out :: tensor, a :: tensor, b :: tensor, keyword) :: tensor

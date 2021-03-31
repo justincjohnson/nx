@@ -1316,6 +1316,36 @@ defmodule Nx.Shape do
         "tensor must have rank 2, got rank #{tuple_size(shape)} with shape #{inspect(shape)}"
       )
 
+  @doc """
+  Returns the shape and names after an Eigen decomposition.
+
+  ## Examples
+
+      iex> Nx.Shape.eigh({4, 4}, [:x, :y])
+      {{4, 4}, [:x, :y]}
+
+  ## Error Cases
+
+      iex> Nx.Shape.eigh({3, 2}, [:x, :y])
+      ** (ArgumentError) tensor must be a square matrix, got shape: {3, 2}
+
+      iex> Nx.Shape.eigh({3, 3, 3}, [:x, :y, :z])
+      ** (ArgumentError) tensor must have rank 2, got rank 3 with shape {3, 3, 3}
+  """
+  # TODO: do I need names?
+  def eigh({n, n}, names), do: {{n, n}, {n}, names}
+
+  def eigh({m, n}, _names),
+    do: raise(ArgumentError, "tensor must be a square matrix, got shape: #{inspect({m, n})}")
+
+  def eigh(shape, _names),
+    do:
+      raise(
+        ArgumentError,
+        "tensor must have rank 2, got rank #{tuple_size(shape)} with shape #{inspect(shape)}"
+      )
+
+
   def qr({m, n}, opts) when m >= n do
     mode = opts[:mode]
 

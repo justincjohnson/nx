@@ -2868,6 +2868,24 @@ defmodule EXLA.DefnExprTest do
     end
   end
 
+  describe "eigh" do
+    defn eigh(t), do: Nx.LinAlg.eigh(t)
+
+    test "works on 2x2 matrix" do
+      t = Nx.tensor([[4.0, -2.0], [1.0, 1.0]])
+      expected_v = Nx.tensor([
+        [0.4472135901451111, 0.8944271802902222],
+        [0.8944271802902222, -0.4472135901451111]
+      ])
+      expected_w = Nx.tensor([0.0, 5.000000953674316])
+      
+      {v, w} = eigh(t)
+
+      compare_tensors!(expected_v, v)
+      compare_tensors!(expected_w, w)
+    end
+  end
+
   describe "bfloat16" do
     defn add(t1, t2), do: t1 + t2
 
